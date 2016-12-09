@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>装修报价_汇装天下网</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="./css/sm.min.css">
+	<script src='./js/jquery.min.js'></script>
+	<style>
+		body{
+			font-family: "微软雅黑";
+		}
+		.rgfw{
+			display: block;
+			position: fixed;
+			z-index: 89;
+			right:0.5rem;
+			bottom:0.2rem;
+		}
+		.rgfw a img{
+			width: 4rem;
+			height: 4rem;
+		}
+	</style>
+</head>
+<body>
+    <header class="bar bar-nav">
+	  <h1 class="title">免费装修报价</h1>
+	</header>
+	<div class="content">
+      <div class="content-padded">
+        <div class="col-100">
+        	<img src="./imgs/fa3_03.jpg" alt="引导图片" width="100%" height="100rem">
+        </div>
+         <div class="list-block">
+             <ul>
+             	<li>
+             	  <div class="item-content">
+		          <div class="item-media"><i class="icon icon-form-name"></i></div>
+		          <div class="item-inner">
+		            <div class="item-title label">面积（m²）</div>
+		            <div class="item-input">
+		              <input type="text" id="floorSpace" placeholder="请输入您的房屋面积m²">
+		            </div>
+		          </div>
+		        </div>	
+             	</li>
+             	<li>
+             	  <div class="item-content native-scroll">
+		          <div class="item-media"><i class="icon icon-form-name"></i></div>
+		          <div class="item-inner">
+		            <div class="item-title label">户型</div>
+		            <div class="item-input">
+		              <input type="text" id='picker' class="new-bottom-region" placeholder="请选择您的房屋户型" readonly="">
+		            </div>
+		          </div>
+		        </div>	
+
+             	</li>
+             	<li>
+             	  <div class="item-content">
+		          <div class="item-media"><i class="icon icon-form-name"></i></div>
+		          <div class="item-inner">
+		            <div class="item-title label">手机</div>
+		            <div class="item-input">
+		              <input type="text" id="phone" placeholder="请输入您的手机号码">
+		            </div>
+		          </div>
+		        </div>	
+
+             	</li>
+             </ul>
+         </div>
+         <div class="content-block">
+		    <div class="row">
+		      <div class="col-100">
+		      <a href="javascript:void(0);" class="button button-big button-fill button-danger submit_button">开始计算</a>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header">装修报价</div>
+		    <div class="card-content">
+		      <div class="card-content-inner">你的装修预算约<b style="color:#f79c33;font-size:1rem;"> 0 </b>万元</div>
+		    </div>
+		    <div class="card-footer"><small>*此预算为房屋半包价格</small></div>
+		  </div>
+      </div>
+    </div>
+    <div class="rgfw">
+    	<a href=""><img src="./imgs/phoneimg3.png" alt="人工服务图片"></a>
+    </div>
+<script>
+$(function() {
+	
+	$("#picker").picker({
+      toolbarTemplate: '<header class="bar bar-nav">\
+      <button class="button button-link pull-right close-picker">确定</button>\
+      <h1 class="title">请选择您的房屋户型</h1>\
+      </header>',
+      cols: [
+        {
+          textAlign: 'center',
+          values: ['一室', '两室', '三室', '四室','五室','六室',]
+        },
+        {
+          textAlign: 'center',
+          values: ['一厅', '两厅', '三厅', '四厅']
+        }
+      ]
+    });
+    
+    $(document).on('click','.submit_button',function () {
+    	var area =$('#floorSpace').val();
+        var htype =$('.new-bottom-region').val();
+	    var userphone =$('#phone').val();
+    	//面积验证
+        if(area == '' || area == null){
+          $.toast("面积不能为空！");
+          return false;
+        }else if(isNaN(area)){
+          $.toast("面积只能输入数字！");
+          return false;
+        }else if(area > 1000){
+          $.toast("面积不要大于1000m²！");
+          return false;
+        }
+    	//户型验证
+        if(htype == '' || htype == null){
+          $.toast("请选择房屋户型！");
+          return false;
+        }
+    	//手机验证
+        if(userphone == '' || userphone == null){
+          $.toast("手机号码不能为空！");
+          return false;
+        }else if(!(/^1[34578]{1}\d{9}$/.test(userphone))){
+          $.toast("手机号码不合法！");
+          return false;
+        }
+        $.showPreloader('计算中...')
+	    setTimeout(function () {
+	        $.hidePreloader();
+	    }, 2000);
+         
+
+
+     });
+    $.init();
+});
+</script>
+<script src='./js/sm.min.js'></script>
+</body>
+</html>
